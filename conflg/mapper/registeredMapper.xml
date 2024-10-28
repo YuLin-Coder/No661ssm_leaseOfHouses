@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.registeredMapper">
+  <resultMap id="BaseResultMap" type="com.javabean.registered">
+    <id column="UserID" jdbcType="INTEGER" property="userid" />
+    <result column="UserName" jdbcType="VARCHAR" property="username" />
+    <result column="UserPWD" jdbcType="VARCHAR" property="userpwd" />
+    <result column="UserPhone" jdbcType="VARCHAR" property="userphone" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from registered
+    where UserID = #{userid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.javabean.registered">
+    insert into registered (UserID, UserName, UserPWD, 
+      UserPhone)
+    values (#{userid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{userpwd,jdbcType=VARCHAR}, 
+      #{userphone,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.javabean.registered">
+    update registered
+    set UserName = #{username,jdbcType=VARCHAR},
+      UserPWD = #{userpwd,jdbcType=VARCHAR},
+      UserPhone = #{userphone,jdbcType=VARCHAR}
+    where UserID = #{userid,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select UserID, UserName, UserPWD, UserPhone
+    from registered
+    where UserID = #{userid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select UserID, UserName, UserPWD, UserPhone
+    from registered
+  </select>
+</mapper>

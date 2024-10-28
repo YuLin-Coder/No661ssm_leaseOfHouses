@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.userlistMapper">
+  <resultMap id="BaseResultMap" type="com.javabean.userlist">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="UserName" jdbcType="VARCHAR" property="username" />
+    <result column="UserCall" jdbcType="VARCHAR" property="usercall" />
+    <result column="UserPWD" jdbcType="VARCHAR" property="userpwd" />
+    <result column="UserEmail" jdbcType="VARCHAR" property="useremail" />
+    <result column="UserPhone" jdbcType="VARCHAR" property="userphone" />
+    <result column="UserID" jdbcType="VARCHAR" property="userid" />
+  </resultMap>
+  
+  <resultMap id="BaseResultMapWith" type="com.javabean.userlist">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="UserName" jdbcType="VARCHAR" property="username" />
+    <result column="UserCall" jdbcType="VARCHAR" property="usercall" />
+    <result column="UserPWD" jdbcType="VARCHAR" property="userpwd" />
+    <result column="UserEmail" jdbcType="VARCHAR" property="useremail" />
+    <result column="UserPhone" jdbcType="VARCHAR" property="userphone" />
+    <result column="UserID" jdbcType="VARCHAR" property="userid" />
+	    <association property="leaseinformation" javaType="com.javabean.leaseinformation">
+	    	<id column="HouseID" jdbcType="INTEGER" property="houseid" />
+		    <result column="HouseCall" jdbcType="VARCHAR" property="housecall" />
+		    <result column="HouseAddress" jdbcType="VARCHAR" property="houseaddress" />
+		    <result column="HouseType" jdbcType="VARCHAR" property="housetype" />
+		    <result column="HouseSize" jdbcType="DOUBLE" property="housesize" />
+		    <result column="HouseMoney" jdbcType="VARCHAR" property="housemoney" />
+		    <result column="HouseState" jdbcType="VARCHAR" property="housestate" />
+		    <result column="HouseStartingDate" jdbcType="DATE" property="housestartingdate" />
+    		<result column="HouseClosingDate" jdbcType="DATE" property="houseclosingdate" />
+		    <result column="ID" jdbcType="INTEGER" property="id" />
+		    <result column="UserName" jdbcType="VARCHAR" property="username" />
+	    </association>
+  </resultMap>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from userlist
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.javabean.userlist">
+    insert into userlist (ID, UserName, UserCall, 
+      UserPWD, UserEmail, UserPhone ,UserID
+      )
+    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{usercall,jdbcType=VARCHAR}, 
+      #{userpwd,jdbcType=VARCHAR}, #{useremail,jdbcType=VARCHAR}, #{userphone,jdbcType=VARCHAR},
+      #{userid,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.javabean.userlist">
+    update userlist
+    set UserName = #{username,jdbcType=VARCHAR},
+      UserCall = #{usercall,jdbcType=VARCHAR},
+      UserPWD = #{userpwd,jdbcType=VARCHAR},
+      UserEmail = #{useremail,jdbcType=VARCHAR},
+      UserPhone = #{userphone,jdbcType=VARCHAR},
+      UserID = #{userid,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select ID, UserName, UserCall, UserPWD, UserEmail, UserPhone ,UserID
+    from userlist
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select ID, UserName, UserCall, UserPWD, UserEmail, UserPhone ,UserID
+    from userlist
+  </select>
+  <select id="selectUserPwd" resultMap="BaseResultMap" parameterType="com.javabean.userlist">
+    select ID, UserName, UserCall, UserPWD, UserEmail, UserPhone ,UserID
+    from userlist
+    WHERE UserCall=#{usercall,jdbcType=VARCHAR} and UserPWD=#{userpwd,jdbcType=VARCHAR}
+  </select>
+  <select id="selectUserCall" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select ID, UserName, UserCall, UserPWD, UserEmail, UserPhone ,UserID
+    from userlist
+    WHERE UserCall=#{usercall,jdbcType=VARCHAR}
+  </select>
+    <select id="selectUserName" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select ID, UserName, UserCall, UserPWD, UserEmail, UserPhone ,UserID
+    from userlist
+    WHERE UserName=#{username,jdbcType=VARCHAR}
+  </select>
+  <select id="selectUserNameWith" resultMap="BaseResultMapWith" parameterType="java.lang.String">
+    select userlist.UserName, UserCall, UserEmail, UserPhone, UserID,HouseID, HouseAddress, HouseType, HouseSize, HouseMoney, HouseState, HouseCall, HouseStartingDate, HouseClosingDate
+    from userlist
+    left JOIN leaseinformation ON userlist.UserName=leaseinformation.UserName
+    WHERE userlist.UserName=#{username,jdbcType=VARCHAR}
+  </select>
+   <select id="selectUserPhone" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select ID, UserName, UserCall, UserPWD, UserEmail, UserPhone ,UserID
+    from userlist
+    WHERE UserPhone=#{userphone,jdbcType=VARCHAR}
+  </select>
+  <select id="selectHouseCallWith" resultMap="BaseResultMapWith" parameterType="java.lang.String">
+   	select userlist.UserName, UserCall, UserEmail, UserPhone, UserID, HouseAddress, HouseType, HouseSize, HouseMoney, HouseState, HouseCall, HouseStartingDate, HouseClosingDate
+    from userlist
+    INNER JOIN leaseinformation ON userlist.UserName=leaseinformation.UserName
+    WHERE leaseinformation.HouseCall=#{housecall,jdbcType=VARCHAR}
+  </select>
+  <select id="rentSelectAll" resultMap="BaseResultMapWith">
+  select userlist.UserName, UserCall, UserEmail, UserPhone, UserID, HouseAddress, HouseType, HouseSize, HouseMoney, HouseState, HouseCall
+    from userlist
+    left JOIN leaseinformation ON userlist.UserName=leaseinformation.UserName
+    WHERE userlist.UserName !='NOT NULL'
+  </select>
+  <update id="updateByPrimaryCall" parameterType="com.javabean.userlist">
+    update userlist
+    set UserName = #{username,jdbcType=VARCHAR},
+        UserPhone = #{userphone,jdbcType=VARCHAR},
+        UserID = #{userid,jdbcType=VARCHAR}
+    where UserCall = #{usercall,jdbcType=VARCHAR}
+  </update>
+  <update id="updateJointTableName" parameterType="com.javabean.userlist">
+    update userlist 
+	    LEFT JOIN leaseinformation ON userlist.UserName=leaseinformation.UserName
+	    SET userlist.UserName=#{username,jdbcType=VARCHAR},
+	    userlist.UserPhone=#{userphone,jdbcType=VARCHAR},
+	    userlist.UserID=#{userid,jdbcType=VARCHAR},
+	    leaseinformation.UserName=#{username,jdbcType=VARCHAR}
+	where leaseinformation.UserName=#{usernametemp,jdbcType=VARCHAR}
+  </update>
+  <update id="updateJointTabledelete" parameterType="java.lang.String">
+    update userlist 
+	    LEFT JOIN leaseinformation ON userlist.UserName=leaseinformation.UserName
+	    SET userlist.UserName=#{username,jdbcType=VARCHAR},
+	    leaseinformation.UserName=NULL
+	where leaseinformation.UserName=#{username,jdbcType=VARCHAR}
+  </update>
+  <select id="selectUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select ID, UserName, UserCall, UserPWD, UserEmail, UserPhone ,UserID
+    from userlist
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+</mapper>

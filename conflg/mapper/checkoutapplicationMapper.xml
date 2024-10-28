@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.checkoutapplicationMapper">
+  <resultMap id="BaseResultMap" type="com.javabean.checkoutapplication">
+    <id column="CoaID" jdbcType="INTEGER" property="coaid" />
+    <result column="CoaUserName" jdbcType="VARCHAR" property="coausername" />
+    <result column="CoaUserID" jdbcType="VARCHAR" property="coauserid" />
+    <result column="CoaUSerPhone" jdbcType="VARCHAR" property="coauserphone" />
+    <result column="CoaHouseID" jdbcType="VARCHAR" property="coahouseid" />
+    <result column="CoaHouseAddress" jdbcType="VARCHAR" property="coahouseaddress" />
+    <result column="CoaHouseSize" jdbcType="DOUBLE" property="coahousesize" />
+    <result column="CoaHousePrice" jdbcType="DOUBLE" property="coahouseprice" />
+    <result column="CoaState" jdbcType="VARCHAR" property="coastate" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from checkoutapplication
+    where CoaID = #{coaid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.javabean.checkoutapplication">
+    insert into checkoutapplication (CoaID, CoaUserName, CoaUserID, 
+      CoaUSerPhone, CoaHouseID, CoaHouseAddress, CoaHouseSize, CoaHousePrice, 
+      CoaState)
+    values (#{coaid,jdbcType=INTEGER}, #{coausername,jdbcType=VARCHAR}, #{coauserid,jdbcType=VARCHAR}, 
+      #{coauserphone,jdbcType=VARCHAR}, #{coahouseid,jdbcType=VARCHAR}, #{coahouseaddress,jdbcType=VARCHAR}, #{coahousesize,jdbcType=DOUBLE}, #{coahouseprice,jdbcType=DOUBLE}, 
+      #{coastate,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.javabean.checkoutapplication">
+    update checkoutapplication
+    set CoaUserName = #{coausername,jdbcType=VARCHAR},
+      CoaUserID = #{coauserid,jdbcType=VARCHAR},
+      CoaUSerPhone = #{coauserphone,jdbcType=VARCHAR},
+      CoaHouseAddress = #{coahouseaddress,jdbcType=VARCHAR},
+      CoaHouseSize = #{coahousesize,jdbcType=DOUBLE},
+      CoaHousePrice = #{coahouseprice,jdbcType=DOUBLE},
+      CoaState = #{coastate,jdbcType=VARCHAR}
+    where CoaID = #{coaid,jdbcType=INTEGER}
+  </update>
+  <update id="xgaiCoaState" parameterType="com.javabean.checkoutapplication">
+    update checkoutapplication
+    set CoaState = #{coastate,jdbcType=VARCHAR}
+    where CoaID = #{coaid,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select CoaID, CoaUserName, CoaUserID, CoaUSerPhone, CoaHouseAddress, CoaHouseSize, CoaHousePrice, 
+    CoaState
+    from checkoutapplication
+    where CoaID = #{coaid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select CoaID, CoaUserName, CoaUserID, CoaUSerPhone, CoaHouseID, CoaHouseAddress, CoaHouseSize, CoaHousePrice, 
+    CoaState
+    from checkoutapplication
+  </select>
+  <!--  -->
+  <select id="selectStateAll" resultMap="BaseResultMap" parameterType="com.javabean.checkoutapplication" resultType="com.javabean.checkoutapplication">
+    select CoaID, CoaUserName, CoaUserID, CoaUSerPhone, CoaHouseID, CoaHouseAddress, CoaHousePrice, 
+    CoaState
+    from checkoutapplication
+    WHERE CoaState in (#{state1,jdbcType=VARCHAR},#{state2,jdbcType=VARCHAR},#{state3,jdbcType=VARCHAR}) and CoaUserName=#{coausername,jdbcType=VARCHAR}
+  </select>
+  <select id="selectCallState" resultMap="BaseResultMap" parameterType="com.javabean.checkoutapplication">
+    select CoaID, CoaUserName, CoaUserID, CoaUSerPhone, CoaHouseID, CoaHouseAddress, CoaHousePrice, 
+    CoaState
+    from checkoutapplication
+    WHERE CoaHouseID=#{coahouseid,jdbcType=VARCHAR} and CoaState=#{coastate,jdbcType=VARCHAR}
+  </select>
+  <select id="selectCoaState" resultMap="BaseResultMap" parameterType="com.javabean.checkoutapplication">
+    select *
+    from checkoutapplication
+    WHERE CoaState='看房申请中'
+  </select>
+  <select id="selectCoaState1" resultMap="BaseResultMap" parameterType="com.javabean.checkoutapplication">
+    select *
+    from checkoutapplication
+    WHERE CoaState!='看房申请中' and CoaState!='已取消' 
+  </select>
+  <update id="updateCallState" parameterType="com.javabean.checkoutapplication">
+    update checkoutapplication
+    set CoaState = #{coastate,jdbcType=VARCHAR}
+    where CoaHouseID = #{coahouseid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateState" parameterType="com.javabean.checkoutapplication">
+    update checkoutapplication
+    set CoaState = #{coastate,jdbcType=VARCHAR}
+    where CoaID = #{coaid,jdbcType=INTEGER}
+  </update>
+</mapper>

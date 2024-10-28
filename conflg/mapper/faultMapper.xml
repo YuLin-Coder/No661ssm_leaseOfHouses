@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.faultMapper">
+  <resultMap id="BaseResultMap" type="com.javabean.fault">
+    <id column="FID" jdbcType="INTEGER" property="fid" />
+    <result column="FHouseID" jdbcType="VARCHAR" property="fhouseid" />
+    <result column="FHouseAddress" jdbcType="VARCHAR" property="fhouseaddress" />
+    <result column="FPrice" jdbcType="DOUBLE" property="fprice" />
+    <result column="FDate" jdbcType="DATE" property="fdate" />
+    <result column="FContent" jdbcType="VARCHAR" property="fcontent" />
+    <result column="FUserName" jdbcType="VARCHAR" property="fusername" />
+    <result column="FUserID" jdbcType="VARCHAR" property="fuserid" />
+    <result column="FUserPhone" jdbcType="VARCHAR" property="fuserphone" />
+    <result column="FState" jdbcType="VARCHAR" property="fstate" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from fault
+    where FID = #{fid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.javabean.fault">
+    insert into fault (FID, FHouseID, FHouseAddress, 
+      FPrice, FDate, FContent, 
+      FUserName, FUserID, FUserPhone, 
+      FState)
+    values (#{fid,jdbcType=INTEGER}, #{fhouseid,jdbcType=VARCHAR}, #{fhouseaddress,jdbcType=VARCHAR}, 
+      #{fprice,jdbcType=DOUBLE}, #{fdate,jdbcType=DATE}, #{fcontent,jdbcType=VARCHAR}, 
+      #{fusername,jdbcType=VARCHAR}, #{fuserid,jdbcType=VARCHAR}, #{fuserphone,jdbcType=VARCHAR}, 
+      #{fstate,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.javabean.fault">
+    update fault
+    set FHouseID = #{fhouseid,jdbcType=VARCHAR},
+      FHouseAddress = #{fhouseaddress,jdbcType=VARCHAR},
+      FPrice = #{fprice,jdbcType=DOUBLE},
+      FDate = #{fdate,jdbcType=DATE},
+      FContent = #{fcontent,jdbcType=VARCHAR},
+      FUserName = #{fusername,jdbcType=VARCHAR},
+      FUserID = #{fuserid,jdbcType=VARCHAR},
+      FUserPhone = #{fuserphone,jdbcType=VARCHAR},
+      FState = #{fstate,jdbcType=VARCHAR}
+    where FID = #{fid,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select FID, FHouseID, FHouseAddress, FPrice, FDate, FContent, FUserName, FUserID, 
+    FUserPhone, FState
+    from fault
+    where FID = #{fid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select FID, FHouseID, FHouseAddress, FPrice, FDate, FContent, FUserName, FUserID, 
+    FUserPhone, FState
+    from fault
+  </select>
+  <select id="selectRepairStateNameAll" resultMap="BaseResultMap" parameterType="com.javabean.fault">
+    select FID, FHouseID, FHouseAddress, FPrice, FDate, FContent, FUserName, FUserID, 
+    FUserPhone, FState
+    from fault
+    where FState = #{fstate,jdbcType=VARCHAR} and FUserName = #{fusername,jdbcType=VARCHAR}
+  </select>
+  <select id="AdminSelectStateAll" resultMap="BaseResultMap" parameterType="com.javabean.fault">
+    select FID, FHouseID, FHouseAddress, FPrice, FDate, FContent, FUserName, FUserID, 
+    FUserPhone, FState
+    from fault
+    where FState = #{fstate,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="repairselect" resultMap="BaseResultMap" parameterType="com.javabean.QueryVo">
+    select FID, FHouseID, FHouseAddress, FPrice, FDate, FContent, FUserName, FUserID, 
+    FUserPhone, FState
+    from fault
+   <where>
+   			FState="已处理"
+   			<if test="zuname!=null and zuname!=''">
+    		and FUserName like '%${zuname}%'
+    	</if>
+    	<if test="fromdate!=null and fromdate!=''">
+    		and FDate = #{fromdate}
+    	</if>
+   </where>
+  </select>
+</mapper>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.rentwithdrawnMapper">
+  <resultMap id="BaseResultMap" type="com.javabean.rentwithdrawn">
+    <id column="RwID" jdbcType="INTEGER" property="rwid" />
+    <result column="RwUserName" jdbcType="VARCHAR" property="rwusername" />
+    <result column="RwUserID" jdbcType="VARCHAR" property="rwuserid" />
+    <result column="RwUserPhone" jdbcType="VARCHAR" property="rwuserphone" />
+    <result column="RwHouseID" jdbcType="VARCHAR" property="rwhouseid" />
+    <result column="RwHouseAddress" jdbcType="VARCHAR" property="rwhouseaddress" />
+    <result column="RwHousePrice" jdbcType="DOUBLE" property="rwhouseprice" />
+    <result column="RwState" jdbcType="VARCHAR" property="rwstate" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from rentwithdrawn
+    where RwID = #{rwid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.javabean.rentwithdrawn">
+    insert into rentwithdrawn (RwID, RwUserName, RwUserID, 
+      RwUserPhone, RwHouseID, RwHouseAddress, 
+      RwHousePrice, RwState)
+    values (#{rwid,jdbcType=INTEGER}, #{rwusername,jdbcType=VARCHAR}, #{rwuserid,jdbcType=VARCHAR}, 
+      #{rwuserphone,jdbcType=VARCHAR}, #{rwhouseid,jdbcType=VARCHAR}, #{rwhouseaddress,jdbcType=VARCHAR}, 
+      #{rwhouseprice,jdbcType=DOUBLE}, #{rwstate,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.javabean.rentwithdrawn">
+    update rentwithdrawn
+    set RwUserName = #{rwusername,jdbcType=VARCHAR},
+      RwUserID = #{rwuserid,jdbcType=VARCHAR},
+      RwUserPhone = #{rwuserphone,jdbcType=VARCHAR},
+      RwHouseID = #{rwhouseid,jdbcType=VARCHAR},
+      RwHouseAddress = #{rwhouseaddress,jdbcType=VARCHAR},
+      RwHousePrice = #{rwhouseprice,jdbcType=DOUBLE},
+      RwState = #{rwstate,jdbcType=VARCHAR}
+    where RwID = #{rwid,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select RwID, RwUserName, RwUserID, RwUserPhone, RwHouseID, RwHouseAddress, RwHousePrice, 
+    RwState
+    from rentwithdrawn
+    where RwID = #{rwid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select RwID, RwUserName, RwUserID, RwUserPhone, RwHouseID, RwHouseAddress, RwHousePrice, 
+    RwState
+    from rentwithdrawn
+  </select>
+  <select id="selectState" resultMap="BaseResultMap" parameterType="com.javabean.rentwithdrawn" resultType="com.javabean.rentwithdrawn">
+    select RwID, RwUserName, RwUserID, RwUserPhone, RwHouseID, RwHouseAddress, RwHousePrice, 
+    RwState
+    from rentwithdrawn
+    WHERE RwState in (#{state1,jdbcType=VARCHAR},#{state2,jdbcType=VARCHAR})
+  </select>
+  <select id="selectStateName" resultMap="BaseResultMap" parameterType="com.javabean.rentwithdrawn" resultType="com.javabean.rentwithdrawn">
+    select RwID, RwUserName, RwUserID, RwUserPhone, RwHouseID, RwHouseAddress, RwHousePrice, 
+    RwState
+    from rentwithdrawn
+    WHERE RwState in (#{state1,jdbcType=VARCHAR},#{state2,jdbcType=VARCHAR}) and RwUserName=#{rwusername,jdbcType=VARCHAR}
+  </select>
+  <select id="selectRwState" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select *
+    from rentwithdrawn
+    where RwState = #{state1,jdbcType=VARCHAR}
+  </select>
+</mapper>

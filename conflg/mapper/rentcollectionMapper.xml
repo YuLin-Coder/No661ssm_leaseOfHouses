@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.rentcollectionMapper">
+  <resultMap id="BaseResultMap" type="com.javabean.rentcollection">
+    <id column="RcID" jdbcType="INTEGER" property="rcid" />
+    <result column="RcHouseID" jdbcType="VARCHAR" property="rchouseid" />
+    <result column="RcHouseAddress" jdbcType="VARCHAR" property="rchouseaddress" />
+    <result column="RcHouseMoney" jdbcType="VARCHAR" property="rchousemoney" />
+    <result column="RcDate" jdbcType="DATE" property="rcdate" />
+    <result column="RcPaidDate" jdbcType="DATE" property="rcpaiddate" />
+    <result column="RcUserName" jdbcType="VARCHAR" property="rcusername" />
+    <result column="RcState" jdbcType="VARCHAR" property="rcstate" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from rentcollection
+    where RcID = #{rcid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.javabean.rentcollection">
+    insert into rentcollection (RcID, RcHouseID, RcHouseAddress, 
+      RcHouseMoney, RcDate, RcUserName, 
+      RcState)
+    values (#{rcid,jdbcType=INTEGER}, #{rchouseid,jdbcType=VARCHAR}, #{rchouseaddress,jdbcType=VARCHAR}, 
+      #{rchousemoney,jdbcType=VARCHAR}, #{rcdate,jdbcType=DATE}, #{rcusername,jdbcType=VARCHAR}, 
+      #{rcstate,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.javabean.rentcollection">
+    update rentcollection
+    set RcHouseID = #{rchouseid,jdbcType=VARCHAR},
+      RcHouseAddress = #{rchouseaddress,jdbcType=VARCHAR},
+      RcHouseMoney = #{rchousemoney,jdbcType=VARCHAR},
+      RcDate = #{rcdate,jdbcType=DATE},
+      RcUserName = #{rcusername,jdbcType=VARCHAR},
+      RcState = #{rcstate,jdbcType=VARCHAR}
+    where RcID = #{rcid,jdbcType=INTEGER}
+  </update>
+  <update id="updateUserName" parameterType="com.javabean.rentcollection">
+    update rentcollection
+      set 
+      RcUserName = #{rcusername,jdbcType=VARCHAR}
+    where RcUserName = #{rcusernametemp,jdbcType=VARCHAR}
+  </update>
+  <update id="updateState">
+    update rentcollection
+      set 
+      RcState = '已缴纳',
+      RcPaidDate = #{date,jdbcType=DATE}
+    where RcID = #{rcid,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select RcID, RcHouseID, RcHouseAddress, RcHouseMoney, RcDate, RcUserName, RcState
+    from rentcollection
+    where RcID = #{rcid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select RcID, RcHouseID, RcHouseAddress, RcHouseMoney, RcDate, RcUserName, RcState
+    from rentcollection
+  </select>
+  <select id="selectPaidStateNameAll" resultMap="BaseResultMap" parameterType="com.javabean.rentcollection">
+    select RcID, RcHouseID, RcHouseAddress, RcHouseMoney, RcDate, RcPaidDate , RcUserName, RcState
+    from rentcollection
+    where RcState = #{rcstate,jdbcType=VARCHAR} and RcUserName=#{rcusername,jdbcType=VARCHAR}
+  </select>
+  <select id="selectPaidStateAll" resultMap="BaseResultMap" parameterType="com.javabean.rentcollection">
+    select RcID, RcHouseID, RcHouseAddress, RcHouseMoney, RcDate, RcPaidDate , RcUserName, RcState
+    from rentcollection
+    where RcState = #{rcstate,jdbcType=VARCHAR}
+  </select>
+  <select id="selectPaidAll" resultMap="BaseResultMap" parameterType="com.javabean.QueryVo">
+    select RcID, RcHouseID, RcHouseAddress, RcHouseMoney, RcDate, RcPaidDate , RcUserName, RcState
+    from rentcollection
+    <where>
+    		RcState = "已缴纳"
+    	<if test="zuname!=null and zuname!=''">
+    		and RcUserName like '%${zuname}%'
+    	</if>
+    	<if test="fromdate!=null and fromdate!=''">
+    		and Rcdate = #{fromdate}
+    	</if>
+    	<if test="todate!=null and todate!=''">
+    		and RcPaidDate = #{todate}
+    	</if>
+    </where>
+  </select>
+</mapper>

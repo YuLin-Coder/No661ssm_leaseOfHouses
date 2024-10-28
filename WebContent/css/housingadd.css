@@ -1,0 +1,12 @@
+table{
+	width:1000px;
+	height:300px;
+	border:1px solid #D8D8D8; 
+	margin-left: 100px;
+}
+tr{
+	border:1px solid #D8D8D8;
+}
+td{
+	border:1px solid #D8D8D8;
+}

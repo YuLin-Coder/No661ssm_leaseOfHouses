@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.mydailylifeMapper">
+  <resultMap id="BaseResultMap" type="com.javabean.mydailylife">
+    <id column="MdlID" jdbcType="INTEGER" property="mdlid" />
+    <result column="MdlDate" jdbcType="VARCHAR" property="mdldate" />
+    <result column="MdlContent" jdbcType="VARCHAR" property="mdlcontent" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from mydailylife
+    where MdlID = #{mdlid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.javabean.mydailylife">
+    insert into mydailylife (MdlID, MdlDate, MdlContent
+      )
+    values (#{mdlid,jdbcType=INTEGER}, #{mdldate,jdbcType=VARCHAR}, #{mdlcontent,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.javabean.mydailylife">
+    update mydailylife
+    set MdlDate = #{mdldate,jdbcType=VARCHAR},
+      MdlContent = #{mdlcontent,jdbcType=VARCHAR}
+    where MdlID = #{mdlid,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select MdlID, MdlDate, MdlContent
+    from mydailylife
+    where MdlID = #{mdlid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select MdlID, MdlDate, MdlContent
+    from mydailylife
+  </select>
+</mapper>

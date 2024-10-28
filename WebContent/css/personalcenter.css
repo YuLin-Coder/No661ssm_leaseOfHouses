@@ -1,0 +1,132 @@
+@charset "UTF-8";
+
+<!--
+个人中心样式 -->* {
+	padding: 0px;
+	margin: 0px;
+	font-family: "宋体";
+}
+
+body {
+	width: 100%;
+	height: 100%;
+	background-color: #eeeeee;
+}
+
+#navigation {
+	width: 100%;
+	background-color: #3d3d45;
+	margin-bottom: 0px;
+}
+
+#navigation a {
+	font-family: "微软雅黑";
+	font-size: 16px;
+}
+
+#navigation a:hover {
+	color: white;
+}
+
+ul li{
+	list-style-type: none;
+}
+
+.dropdown-menu li a:hover {
+	color: red;
+}
+#main {
+	width: 1000px;
+	height: 700px;
+	margin: 30px auto;
+	margin-bottom: 50px;
+	background-color: #eeeeee;
+}
+
+#main #pcleft {
+	background-color: white;
+	float: left;
+	width : 22%;
+	height: 700px;
+	width: 22%;
+}
+
+#main .headportrait{
+	width: 100%;
+	height: 250px;
+}
+
+#main .headportrait ul li{
+	text-align: center;
+	line-height: 200px;
+	font-family: "微软雅黑";
+	font-size: 16px;
+}
+
+#main .headportrait ul li a{
+	text-decoration: none;
+	color: black;
+}
+
+#main .headportrait ul li img{
+	margin: auto;
+	width: 140px;
+	height: 140px;
+}
+
+#main .informationfunctiontien{
+	margin-top: 250px;
+}
+
+#main .informationfunctiontien li {
+	height: 80px;
+	line-height: 80px;
+	padding-left: 10px;
+	background-color: #eeeeee;
+	height: 80px;
+}
+
+#main #pcleft .informationfunction li {
+	font-size: 16px;
+	height: 80px;
+	line-height: 80px;
+	text-align: center;
+	width: 220px;
+}
+
+#main #pcleft .informationfunction li:hover {
+	background-color: #eeeeee;
+}
+
+#main #pcleft .informationfunction li a {
+	text-decoration: none;
+	color: black;
+}
+
+#main #pcrighttop {
+	background-color: white;
+	float: right;
+	width: 75%;
+	height: 70px;
+}
+
+#main #pcrightbottom {
+	margin-top: 20px;
+	background-color: white;
+	float: right;
+	width: 75%;
+	height: 610px;
+}
+
+#main #pcrighttop .pcrighttopApp{
+	float: right;
+}
+#main #pcrighttop .pcrighttopApp:hover {
+	cursor: pointer;
+}
+
+@media screen and (max-width: 1200px) {
+	#navigation {
+		width: 1200px;
+	}
+}

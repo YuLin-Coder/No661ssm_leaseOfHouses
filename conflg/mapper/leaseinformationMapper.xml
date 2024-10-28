@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.leaseinformationMapper">
+  <resultMap id="BaseResultMap" type="com.javabean.leaseinformation">
+    <id column="HouseID" jdbcType="INTEGER" property="houseid" />
+    <result column="HouseCall" jdbcType="VARCHAR" property="housecall" />
+    <result column="HouseAddress" jdbcType="VARCHAR" property="houseaddress" />
+    <result column="HouseType" jdbcType="VARCHAR" property="housetype" />
+    <result column="HouseSize" jdbcType="DOUBLE" property="housesize" />
+    <result column="HouseMoney" jdbcType="VARCHAR" property="housemoney" />
+    <result column="HouseState" jdbcType="VARCHAR" property="housestate" />
+    <result column="HouseStartingDate" jdbcType="DATE" property="housestartingdate" />
+    <result column="HouseClosingDate" jdbcType="DATE" property="houseclosingdate" />
+        <result column="HouseRecommend" jdbcType="VARCHAR" property="houserecommend" />
+    <result column="ID" jdbcType="INTEGER" property="id" />
+    <result column="UserName" jdbcType="VARCHAR" property="username" />
+  </resultMap>
+  
+  <resultMap id="BaseResultMapWith" type="com.javabean.leaseinformation">
+    <id column="HouseID" jdbcType="INTEGER" property="houseid" />
+    <result column="HouseCall" jdbcType="VARCHAR" property="housecall" />
+    <result column="HouseAddress" jdbcType="VARCHAR" property="houseaddress" />
+    <result column="HouseType" jdbcType="VARCHAR" property="housetype" />
+    <result column="HouseSize" jdbcType="DOUBLE" property="housesize" />
+    <result column="HouseMoney" jdbcType="VARCHAR" property="housemoney" />
+    <result column="HouseState" jdbcType="VARCHAR" property="housestate" />
+    <result column="HouseStartingDate" jdbcType="DATE" property="housestartingdate" />
+    <result column="HouseClosingDate" jdbcType="DATE" property="houseclosingdate" />
+        <result column="HouseRecommend" jdbcType="VARCHAR" property="houserecommend" />
+    <result column="ID" jdbcType="INTEGER" property="id" />
+    <result column="UserName" jdbcType="VARCHAR" property="username" />
+    <association property="leaseimg" javaType="com.javabean.leaseimg">
+    	<id column="ID" jdbcType="INTEGER" property="id" />
+    	<result column="imgName" jdbcType="VARCHAR" property="imgname" />
+    	<result column="ImgRoute" jdbcType="VARCHAR" property="imgroute" />
+    </association>
+  </resultMap>
+  
+    <resultMap id="BaseResultMapWith1" type="com.javabean.leaseinformation">
+    <id column="HouseID" jdbcType="INTEGER" property="houseid" />
+    <result column="HouseCall" jdbcType="VARCHAR" property="housecall" />
+    <result column="HouseAddress" jdbcType="VARCHAR" property="houseaddress" />
+    <result column="HouseType" jdbcType="VARCHAR" property="housetype" />
+    <result column="HouseSize" jdbcType="DOUBLE" property="housesize" />
+    <result column="HouseMoney" jdbcType="VARCHAR" property="housemoney" />
+    <result column="HouseState" jdbcType="VARCHAR" property="housestate" />
+    <result column="HouseStartingDate" jdbcType="DATE" property="housestartingdate" />
+    <result column="HouseClosingDate" jdbcType="DATE" property="houseclosingdate" />
+        <result column="HouseRecommend" jdbcType="VARCHAR" property="houserecommend" />
+    <result column="ID" jdbcType="INTEGER" property="id" />
+    <result column="UserName" jdbcType="VARCHAR" property="username" />
+    <association property="userlist" javaType="com.javabean.userlist">
+    	<id column="ID" jdbcType="INTEGER" property="id" />
+	    <result column="UserName" jdbcType="VARCHAR" property="username" />
+	    <result column="UserCall" jdbcType="VARCHAR" property="usercall" />
+	    <result column="UserPWD" jdbcType="VARCHAR" property="userpwd" />
+	    <result column="UserEmail" jdbcType="VARCHAR" property="useremail" />
+	    <result column="UserPhone" jdbcType="VARCHAR" property="userphone" />
+	    <result column="UserID" jdbcType="VARCHAR" property="userid" />
+    </association>
+  </resultMap>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from leaseinformation
+    where HouseID = #{houseid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.javabean.leaseinformation">
+    insert into leaseinformation (HouseID,HouseCall, HouseAddress, HouseType, 
+      HouseSize, HouseMoney, HouseState,HouseRecommend, ID, UserName,
+      HouseStartingDate, HouseClosingDate)
+    values (#{houseid,jdbcType=INTEGER},#{housecall,jdbcType=VARCHAR},#{houseaddress,jdbcType=VARCHAR}, #{housetype,jdbcType=VARCHAR}, 
+      #{housesize,jdbcType=DOUBLE}, #{housemoney,jdbcType=VARCHAR}, #{housestate,jdbcType=VARCHAR}, #{houserecommend,jdbcType=VARCHAR},
+      #{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{housestartingdate,jdbcType=DATE}, #{houseclosingdate,jdbcType=DATE}) 
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.javabean.leaseinformation">
+    update leaseinformation
+    set HouseAddress = #{houseaddress,jdbcType=VARCHAR},
+      HouseType = #{housetype,jdbcType=VARCHAR},
+      HouseSize = #{housesize,jdbcType=DOUBLE},
+      HouseMoney = #{housemoney,jdbcType=VARCHAR},
+      HouseState = #{housestate,jdbcType=VARCHAR},
+      HouseStartingDate = #{housestartingdate,jdbcType=DATE},
+      HouseClosingDate = #{houseclosingdate,jdbcType=DATE},
+      HouseRecommend = #{houserecommend,jdbcType=VARCHAR},
+      ID = #{id,jdbcType=INTEGER},
+      leaseinformation.UserName = #{username,jdbcType=VARCHAR}
+    where HouseID = #{houseid,jdbcType=INTEGER}
+  </update>
+  <update id="updacontract" parameterType="java.lang.Integer">
+    update leaseinformation
+    set
+      HouseState = '可租凭',
+      UserName = null
+    where HouseID = #{houseid,jdbcType=INTEGER}
+  </update>
+  <update id="updateCancelForeignKey" parameterType="java.lang.String">
+   	UPDATE leaseinformation 
+	   	SET leaseinformation.UserName=NULL,
+	   	leaseinformation.HouseState='可租凭' 
+   	WHERE leaseinformation.HouseCall=#{housecall,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+     select *
+    from leaseinformation
+    where HouseID = #{houseid,jdbcType=INTEGER}
+  </select>
+  <select id="selectByPrimaryKey1" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select *
+    from leaseinformation
+    where HouseID = #{houseid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select *
+    from leaseinformation
+  </select>
+  <select id="selectNameAll" resultMap="BaseResultMap" parameterType="java.lang.String">
+     select *
+    from leaseinformation
+    where UserName = #{username,jdbcType=VARCHAR}
+  </select>
+    <select id="selectHouseCall" resultMap="BaseResultMap" parameterType="java.lang.String">
+     select *
+    from leaseinformation
+    where HouseCall = #{housecall,jdbcType=VARCHAR}
+  </select>
+  <!-- List<leaseinformation> selectAllWith();
+       List<leaseinformation> selectByPrimaryKeyWith(Integer houseid); -->
+  <select id="selectAllWith" resultMap="BaseResultMapWith" parameterType="java.lang.String">
+    select *
+    from leaseinformation
+    inner join leaseimg on leaseinformation.ID = leaseimg.ID
+  </select>
+  	<select id="selectRecommend" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select HouseID,HouseCall, HouseAddress, HouseType, HouseSize, HouseMoney, HouseState,HouseRecommend, ID, UserName
+    from leaseinformation
+    where HouseRecommend = '已推荐'
+  </select>  
+  <select id="selectByPrimaryKeyWith" resultMap="BaseResultMapWith" parameterType="java.lang.Integer">
+     select *
+    from leaseinformation
+    inner join leaseimg on leaseinformation.ID = leaseimg.ID
+    WHERE leaseinformation.HouseID=#{houseid,jdbcType=INTEGER}
+  </select>
+  <select id="selecthousteaseWith" resultMap="BaseResultMapWith1" parameterType="java.lang.String">
+    select *
+    from leaseinformation
+    inner join userlist on leaseinformation.UserName=userlist.UserName
+    WHERE leaseinformation.HouseState = #{housestate,jdbcType=VARCHAR}
+  </select>
+  <select id="selectState" resultMap="BaseResultMapWith" parameterType="java.lang.String">
+    select *
+    from leaseinformation
+    inner join leaseimg on leaseinformation.ID = leaseimg.ID
+    WHERE leaseinformation.HouseState = #{housestate,jdbcType=VARCHAR}
+  </select>
+  <select id="selectHouseQuery" resultMap="BaseResultMapWith" parameterType="java.lang.String">
+    SELECT * 
+    FROM leaseinformation 
+    inner join leaseimg on leaseinformation.ID = leaseimg.ID
+    WHERE leaseinformation.HouseState = '可租凭'
+    AND CONCAT(HouseAddress,HouseType) LIKE '%${_parameter}%'
+  </select>
+  <select id="selectAllLeasable" resultMap="BaseResultMap">
+    select *
+    from leaseinformation
+    where HouseState ='可租凭'
+  </select>
+</mapper>

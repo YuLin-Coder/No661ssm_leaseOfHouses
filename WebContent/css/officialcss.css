@@ -1,0 +1,107 @@
+@charset "UTF-8";
+
+<!--
+官网样式
+-->
+
+* {
+	padding: 0px;
+	margin: 0px;
+	font-family: "微软雅黑";
+}
+
+a{
+	text-decoration: none;
+}
+
+ul li{
+	list-style: none;
+}
+
+body {
+	background-color: #eeeeee;
+	width: 100%;
+	height: 100%;
+}
+
+.jumbotron {
+	margin-bottom: 0px;
+	width: 100%;
+	margin-top: -10px;
+}
+
+.giantScreen {
+	margin-left: 120px;
+}
+
+.understand {
+	cursor: pointer;
+	margin-left: 42px;
+}
+
+.list-group {
+	width: 600px;
+	height: 200px;
+	float:right; 
+	margin-right: 30px;
+	margin-top: -20px;
+}
+
+#carousel-example-generic {
+	width: 100%;
+}
+
+.carousel-inner {
+	height: 350px;
+	background-color: #3d3d45;
+}
+
+.carousel-inner div .img-inner {
+	width: 70%;
+	height: 350px;
+}
+
+#rotatehouseinf {
+	width: 25%;
+	height: 350px;
+	background-color: #3d3d45;
+	float: right;
+	height: 350px;
+	color: white;
+	padding-right: 5%;
+	line-height: 30px;
+}
+
+.carousel-title{
+	padding: 10px 0px;
+}
+
+#search {
+	width: 100%;
+	height: 60px;
+	background-color: #337ab7;
+	padding: 10px 0px;
+	margin: 20px 0px;
+}
+
+#search .col-sm-10 {
+	width: 400px;
+	margin-top: 3px;
+	margin-left: 10%;
+}
+
+#houseslist {
+	width: 80%;
+	height: 100%;
+	margin: 50px auto;
+}
+
+#house_info{
+	font-weight: bold;
+}
+
+@media screen and (max-width: 1200px) {
+	.jumbotron,#carousel-example-generic,#search,#houseslist {
+		width: 1200px;
+	}
+}

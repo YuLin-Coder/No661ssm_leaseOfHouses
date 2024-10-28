@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.adminlistMapper">
+  <resultMap id="BaseResultMap" type="com.javabean.adminlist">
+    <id column="AdminID" jdbcType="INTEGER" property="adminid" />
+    <result column="AdminName" jdbcType="VARCHAR" property="adminname" />
+    <result column="AdminPWD" jdbcType="VARCHAR" property="adminpwd" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from adminlist
+    where AdminID = #{adminid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.javabean.adminlist">
+    insert into adminlist (AdminID, AdminName, AdminPWD
+      )
+    values (#{adminid,jdbcType=INTEGER}, #{adminname,jdbcType=VARCHAR}, #{adminpwd,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.javabean.adminlist">
+    update adminlist
+    set AdminName = #{adminname,jdbcType=VARCHAR},
+      AdminPWD = #{adminpwd,jdbcType=VARCHAR}
+    where AdminID = #{adminid,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select AdminID, AdminName, AdminPWD
+    from adminlist
+    where AdminID = #{adminid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select AdminID, AdminName, AdminPWD
+    from adminlist
+  </select>
+  <select id="queryAllAdminPwd" resultMap="BaseResultMap" parameterType="com.javabean.adminlist">
+    select AdminID, AdminName, AdminPWD
+    from adminlist
+    WHERE AdminName=#{adminname,jdbcType=VARCHAR} and AdminPWD=#{adminpwd,jdbcType=VARCHAR}
+  </select>
+</mapper>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.headportraitimgMapper">
+  <resultMap id="BaseResultMap" type="com.javabean.headportraitimg">
+    <id column="headPortraitImgID" jdbcType="INTEGER" property="headportraitimgid" />
+    <result column="headPortraitImgUserName" jdbcType="VARCHAR" property="headportraitimgusername" />
+    <result column="headPortraitImgAddress" jdbcType="VARCHAR" property="headportraitimgaddress" />
+  </resultMap>
+  <insert id="insertuserimg" parameterType="com.javabean.headportraitimg">
+  	insert into headportraitimg (headportraitimgID, headportraitimgUserName, headportraitimgAddress )
+	values(#{headportraitimgid,jdbcType=INTEGER},#{headportraitimgusername,jdbcType=VARCHAR},#{headportraitimgaddress,jdbcType=VARCHAR})			
+  </insert>
+  <update id="updatauserimg" parameterType="com.javabean.headportraitimg">
+    UPDATE headportraitimg
+    SET 
+    	headPortraitImgAddress=#{headportraitimgaddress,jdbcType=VARCHAR}
+    WHERE
+    	headPortraitImgUserName=#{headportraitimgusername,jdbcType=VARCHAR}
+  </update>
+  <select id="selectheadportrait" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select headPortraitImgID, headPortraitImgUserName, headPortraitImgAddress
+    from headportraitimg
+    WHERE headPortraitImgUserName=#{headportraitimgusername,jdbcType=VARCHAR}
+  </select>
+  <delete id="deletuserimg" parameterType="java.lang.String">
+    delete from headportraitimg
+    where headPortraitImgUserName = #{headportraitimgusername,jdbcType=VARCHAR}
+  </delete>
+</mapper>
